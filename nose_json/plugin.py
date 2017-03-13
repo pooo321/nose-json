@@ -57,7 +57,7 @@ class JsonReportPlugin(Plugin):
         report_output = options.json_file
 
         path = os.path.realpath(os.path.dirname(report_output))
-        if not os.path.exists(path):
+        if path and not os.path.exists(path):
             os.makedirs(path)
 
         self.report_output = report_output
@@ -71,7 +71,7 @@ class JsonReportPlugin(Plugin):
             fp.write(simplejson.dumps({
                 'stats': self.stats,
                 'results': self.results,
-            }))
+            }, sort_keys=True, indent=4 * ' '))
 
     def startTest(self, test):
         self._timer = time()
